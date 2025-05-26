@@ -1,7 +1,6 @@
 package test.file;
 import java.io.FileInputStream;
 
-
 public class Test {
 
     public void Hello(){
@@ -13,7 +12,6 @@ public class Test {
         int z ;
         System.out.println("Bonjour a tous");
     }
-
 
     public void C(int r){
         int c ;
