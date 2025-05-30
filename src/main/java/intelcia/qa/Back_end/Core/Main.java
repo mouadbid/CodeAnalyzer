@@ -2,7 +2,7 @@ package intelcia.qa.Back_end.Core;
 
 public class Main {
     public static void main(String args[]) throws Exception {
-        String FileName = "src\\main\\resources\\FilesTest\\Test.java";
+        String FileName = "src\\main\\resources\\FilesTest\\SecondTest.java";
         ShowAllMethods extractor = new ShowAllMethods(FileName);
         NotImportantVar notImporatant = new NotImportantVar();
         System.out.println("Methods : ");
@@ -18,6 +18,8 @@ public class Main {
         System.out.println("des fuits possible : \n");
         LeakResource Test = new LeakResource(FileName);
         Test.ObjectCreation();
+        SecurityHotspot sec = new SecurityHotspot(FileName);
+        System.out.println(sec.securityproblems());
 
 
     }
