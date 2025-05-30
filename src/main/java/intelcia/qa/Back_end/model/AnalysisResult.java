@@ -12,8 +12,16 @@ public class AnalysisResult {
     private HashSet<String> notImportantVariables;
     private ArrayList<ArrayList<String>> identicMethods;
     private List<String> leakResources;
+    private ArrayList<String> securityProblems;
 
     // Getters et setters
+
+    public ArrayList<String> getSecurityProblems(){
+        return securityProblems;
+    }
+    public void setSecurityProblems(ArrayList<String> p){
+        securityProblems = p ;
+    }
 
     public List<String> getMethods() {
         return methods;

@@ -21,6 +21,7 @@ public class FileAnalysisService {
         NotImportantVar notImportant = new NotImportantVar();
         IdenticMethode identic = new IdenticMethode(filePath);
         LeakResource leak = new LeakResource(filePath);
+        SecurityHotspot sec = new SecurityHotspot(filePath);
 
         // Créer le résultat
         AnalysisResult result = new AnalysisResult();
@@ -31,6 +32,7 @@ public class FileAnalysisService {
                 notImportant.VariablesNotImportanat(extractor.Allvariables(), extractor.extractNameExpressions()));
         result.setIdenticMethods(identic.identicMethods(filePath));
         result.setLeakResources(leak.ObjectCreation());
+        result.setSecurityProblems(sec.securityproblems());
 
         // Supprimer le fichier temporaire
         tempFile.delete();
