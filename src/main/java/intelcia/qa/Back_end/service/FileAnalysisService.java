@@ -23,6 +23,7 @@ public class FileAnalysisService {
         LeakResource leak = new LeakResource(filePath);
         SecurityHotspot sec = new SecurityHotspot(filePath);
 
+
         // Créer le résultat
         AnalysisResult result = new AnalysisResult();
         result.setMethods(extractor.Allmethods());
@@ -33,6 +34,7 @@ public class FileAnalysisService {
         result.setIdenticMethods(identic.identicMethods(filePath));
         result.setLeakResources(leak.ObjectCreation());
         result.setSecurityProblems(sec.securityproblems());
+
 
         // Supprimer le fichier temporaire
         tempFile.delete();

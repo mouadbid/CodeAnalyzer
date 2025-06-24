@@ -2,14 +2,19 @@ package intelcia.qa.Back_end.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import intelcia.qa.Back_end.Repository.CodeAnalysisRepository;
 import intelcia.qa.Back_end.model.Aimodel;
+import intelcia.qa.Back_end.model.CodeAnalysisEntity;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+
 
 @Service
 public class AiService {
@@ -30,7 +35,7 @@ public class AiService {
         String text = fileToText(file);
         System.out.println(text);
 
-        String prompt = "Analyze the following Java code.\n\n" +
+        String prompt = "Analyze the following Java/angular code.\n\n" +
                 "Classify all detected issues into exactly one of the following types:\n" +
                 "- Vulnerability\n" +
                 "- Bug\n" +
@@ -50,16 +55,16 @@ public class AiService {
                 "  • the method name in the format MethodName(),\n" +
                 "  • and the line number (e.g., 'at line 5') all in the same string.\n" +
                 "- Use empty arrays ([]) if no issues are found.\n" +
-                "- If the code is not valid Java, respond only with: \"this is not java code\"\n" +
-                "- **IMPORTANT:** Do NOT use any code concatenation (like '+ args[0] +'or \") inside the strings because answer will be inside arraylist, return the full code snippet as a simple text.\n\n" +
-                "Java code to analyze:\n" + text;
+                "- If the code is not valid Java/angular, respond only with: \"this is not java/angular code\"\n" +
+                "- **IMPORTANT:** Do NOT use any code concatenation (like '+ args[0] +'or \" or anythig like that) inside the strings because answer will be inside arraylist, return the full code snippet as a simple text.\n\n" +
+                "Java/angular code to analyze:\n" + text;
 
 
 
         // Analyse des bugs
         String responseRaw = chatClient
                 .prompt()
-                .system("You are an english AI assistant trained to find errors in Java code only and provide structured reports.")
+                .system("You are an english AI assistant trained to find errors in Java/angular code only and provide structured reports.")
                 .user(prompt)
                 .call()
                 .content()
@@ -78,8 +83,8 @@ public class AiService {
         Aimodel resultModel = new Aimodel();
 
         try {
-            if (responseRaw.trim().equalsIgnoreCase("this is not java code")) {
-                resultModel.setBugs(Map.of("Error", List.of("This is not Java code")));
+            if (responseRaw.trim().equalsIgnoreCase("this is not java/angular code")) {
+                resultModel.setBugs(Map.of("Error", List.of("This is not Java/angular code")));
                 return resultModel;
             }
             responseRaw = responseRaw.replaceAll(",(\\s*])", "$1");
